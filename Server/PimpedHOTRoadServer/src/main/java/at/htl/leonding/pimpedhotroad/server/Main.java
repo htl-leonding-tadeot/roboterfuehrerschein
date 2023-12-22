@@ -1,6 +1,5 @@
 package at.htl.leonding.pimpedhotroad.server;
 
-import at.htl.leonding.pimpedhotroad.server.rework.*;
 import at.htl.leonding.pimpedhotroad.server.rework.VehicleServer;
 
 import java.io.IOException;
@@ -23,7 +22,7 @@ public class Main {
         VehicleServer.getInstance().start();
         while(true){
             while(VehicleServer.getInstance().isRunning() || VehicleServer.getInstance().isAlive()){
-                if(printedRunning == false) {
+                if(!printedRunning) {
                     System.out.println("Server running");
                     printedRunning = true;
                 }
