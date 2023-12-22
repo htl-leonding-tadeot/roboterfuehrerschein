@@ -3,18 +3,12 @@ package at.htl.leonding.pimpedhotroad.server.rework;
 import at.htl.leonding.pimpedhotroad.logger.FileLogger;
 import at.htl.leonding.pimpedhotroad.model.Impulse;
 import at.htl.leonding.pimpedhotroad.server.DirectoryPlayer;
-import com.pi4j.io.gpio.GpioController;
-import com.pi4j.io.gpio.GpioFactory;
-import com.pi4j.io.gpio.GpioPinDigitalOutput;
-import com.pi4j.io.gpio.RaspiPin;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.logging.Logger;
 
 /**
  * Created by michael on 1/26/17.
