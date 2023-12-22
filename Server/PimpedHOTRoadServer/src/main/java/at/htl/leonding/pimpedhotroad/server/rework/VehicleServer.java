@@ -54,7 +54,7 @@ public class VehicleServer extends Thread implements ImpulseProcessor.ImpulsePro
 
     @Override
     public void run() {
-        while(running == true){
+        while(running){
             try {
                 Socket clientSocket = serverSocket.accept();
                 ImpulseProcessor impulseProcessor = new ImpulseProcessor(clientSocket, player);
@@ -72,7 +72,7 @@ public class VehicleServer extends Thread implements ImpulseProcessor.ImpulsePro
 
     @Override
     public synchronized void start() {
-        if(running == false) {
+        if(!running) {
             running = true;
             super.start();
         }
