@@ -35,13 +35,13 @@ public class ImpulseProcessor extends Thread {
 
     private final DirectoryPlayer player;
 
-    private static final int PIN_PWMA = 0;
-    private static final int PIN_AIN1 = 1;
-    private static final int PIN_AIN2 = 2;
-    private static final int PIN_PWMB = 3;
-    private static final int PIN_BIN1 = 4;
-    private static final int PIN_BIN2 = 5;
-    private static final int PIN_STBY = 6;
+    private static final int PIN_PWMA = 17;
+    private static final int PIN_PWMB = 22;
+    private static final int PIN_AIN1 = 27;
+    private static final int PIN_AIN2 = 18;
+    private static final int PIN_BIN1 = 23;
+    private static final int PIN_BIN2 = 24;
+    private static final int PIN_STBY = 25;
 
     private volatile DigitalOutput PWMA;
     private volatile DigitalOutput AIN1;
