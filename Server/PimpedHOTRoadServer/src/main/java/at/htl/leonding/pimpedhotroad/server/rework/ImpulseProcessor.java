@@ -23,14 +23,14 @@ import java.util.logging.Logger;
  * Created by michael on 1/26/17.
  */
 public class ImpulseProcessor extends Thread {
-    public interface ImpulseProcessorListener{
+    public interface ImpulseProcessorListener {
         void onImpulseReceived(Socket socket, Impulse receivedImpulse);
         void onImpulseProcessed(Socket socket, Impulse processedImpulse);
         void onStreamDisconnected(Socket socket);
     }
 
-    private Socket socket;
-    private List<ImpulseProcessorListener> listeners;
+    private final Socket socket;
+    private final List<ImpulseProcessorListener> listeners;
     private boolean running = true;
 
     private final DirectoryPlayer player;
@@ -234,7 +234,7 @@ public class ImpulseProcessor extends Thread {
             }
         } catch (Exception ex) {
             System.out.println("Music playback error! Doing nothing...");
-            Logger.getLogger(at.htl.leonding.pimpedhotroad.server.rework.VehicleServer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VehicleServer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
