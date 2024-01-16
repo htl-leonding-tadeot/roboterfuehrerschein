@@ -6,7 +6,7 @@ cd ~
 
 echo "Installing dependencies"
 sudo apt update && sudo apt upgrade -y
-sudo apt install libjpeg9-dev imagemagick libv4l-dev cmake openjdk-17-jdk maven git build-essential -y
+sudo apt install libjpeg9-dev imagemagick libv4l-dev cmake openjdk-17-jdk maven git build-essential pigpio -y
 
 echo "cloning git repositories"
 git clone https://github.com/htl-leonding-tadeot/roboterfuehrerschein/
