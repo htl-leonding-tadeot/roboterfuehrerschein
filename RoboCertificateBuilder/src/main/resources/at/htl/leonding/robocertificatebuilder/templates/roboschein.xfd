@@ -40,16 +40,16 @@
 						<fo:external-graphic id="foto" content-height="69px"/>
 					</fo:block>
 				</fo:block-container>
-				<fo:block-container position="absolute" top="48px" left="107px">
+				<fo:block-container position="absolute" top="105.5px" left="110px">
 					<fo:block id="nachname" font-size="9pt"></fo:block>
 				</fo:block-container>
-				<fo:block-container position="absolute" top="68px" left="108px">
+				<fo:block-container position="absolute" top="125.5px" left="110px">
 					<fo:block id="vorname" font-size="7.5pt"></fo:block>
 				</fo:block-container>
-				<fo:block-container position="absolute" top="78px" left="108px">
+				<fo:block-container position="absolute" top="134.5px" left="110px">
 					<fo:block id="geburtsdatum" font-size="7.5pt"></fo:block>
 				</fo:block-container>
-				<fo:block-container position="absolute" top="87px" left="108px">
+				<fo:block-container position="absolute" top="144.5px" left="113px">
 					<fo:block id="ausstellungsdatum" font-size="7.5pt"></fo:block>
 				</fo:block-container>
 			</fo:block-container>

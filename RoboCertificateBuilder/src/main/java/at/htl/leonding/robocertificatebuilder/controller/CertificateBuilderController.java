@@ -9,6 +9,7 @@ import org.xml.sax.SAXException;
 
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class CertificateBuilderController {
     @FXML

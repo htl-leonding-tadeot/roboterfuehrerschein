@@ -61,7 +61,13 @@ public class CertificateBuilderService {
                 Files.copy(Objects.requireNonNull(RoboCertificateApplication.class.getResourceAsStream("templates/roboschein.jpg")), Path.of("roboschein.jpg"));
             }
 
+            // Fix some broken shit ignored by this very good library
             roboImage.setAttribute("src", String.format("file:///%s", Paths.get("roboschein.jpg").toAbsolutePath()));
+            roboImage.setAttribute("content-height", "170px");
+
+            picture.setAttribute("content-height", "69px");
+
+            lastName.setAttribute("font-size", "9px");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
