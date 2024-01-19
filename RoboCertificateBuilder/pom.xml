@@ -11,7 +11,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-<junit.version>5.10.0</junit.version>  </properties>
+  </properties>
 
   <dependencies>
     <dependency>
@@ -24,19 +24,12 @@
       <artifactId>javafx-fxml</artifactId>
       <version>21</version>
     </dependency>
-
-<dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-api</artifactId>
-      <version>${junit.version}</version>
-      <scope>test</scope>
-    </dependency>
     <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
-      <version>${junit.version}</version>
-      <scope>test</scope>
-    </dependency>  </dependencies>
+        <groupId>org.apache.xmlgraphics</groupId>
+        <artifactId>fop</artifactId>
+        <version>2.9</version>
+    </dependency>
+  </dependencies>
 
   <build>
     <plugins>
@@ -58,7 +51,7 @@
             <!-- Default configuration for running with: mvn clean javafx:run -->
             <id>default-cli</id>
             <configuration>
-              <mainClass>at.htl.leonding.robocertificatebuilder/at.htl.leonding.robocertificatebuilder.HelloApplication</mainClass>
+              <mainClass>at.htl.leonding.robocertificatebuilder.RoboCertificateApplication</mainClass>
               <launcher>app</launcher>
               <jlinkZipName>app</jlinkZipName>
               <jlinkImageName>app</jlinkImageName>
