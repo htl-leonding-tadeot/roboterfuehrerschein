@@ -22,9 +22,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.List;
+import java.util.*;
+
 import org.apache.fop.apps.FopFactory;
 import org.xml.sax.SAXException;
 import org.apache.fop.apps.FOUserAgent;
@@ -46,16 +45,16 @@ public class CertificateBuilderService {
             doc = documentBuilder.parse(RoboCertificateApplication.class.getResourceAsStream("templates/roboschein.xfd"));
             doc.getDocumentElement().normalize();
 
-            List<Element> basicData = getElementsById("fo:block", List.of("nachname", "vorname", "geburtsdatum", "ausstellungsdatum"));
-            List<Element> pictures = getElementsById("fo:external-graphic", List.of("foto", "robotemplate"));
+            Map<String, Element> basicData = getElementsById("fo:block", List.of("nachname", "vorname", "geburtsdatum", "ausstellungsdatum"));
+            Map<String, Element> pictures = getElementsById("fo:external-graphic", List.of("foto", "robotemplate"));
 
-            lastName = basicData.get(0);
-            firstName = basicData.get(1);
-            dob = basicData.get(2);
-            doi = basicData.get(3);
-            picture = pictures.get(0);
+            lastName = basicData.get("nachname");
+            firstName = basicData.get("vorname");
+            dob = basicData.get("geburtsdatum");
+            doi = basicData.get("ausstellungsdatum");
+            picture = pictures.get("foto");
             // Template for robo certificate
-            Element roboImage = pictures.get(1);
+            Element roboImage = pictures.get("robotemplate");
 
             if(!Files.exists(Path.of("roboschein.jpg"))) {
                 Files.copy(Objects.requireNonNull(RoboCertificateApplication.class.getResourceAsStream("templates/roboschein.jpg")), Path.of("roboschein.jpg"));
@@ -66,8 +65,6 @@ public class CertificateBuilderService {
             roboImage.setAttribute("content-height", "170px");
 
             picture.setAttribute("content-height", "69px");
-
-            lastName.setAttribute("font-size", "9px");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -77,8 +74,8 @@ public class CertificateBuilderService {
         return instance;
     }
 
-    private List<Element> getElementsById(String tagName, List<String> ids) {
-        List<Element> elements = new ArrayList<>();
+    private Map<String, Element> getElementsById(String tagName, List<String> ids) {
+        Map<String, Element> elements = new HashMap<>();
         NodeList dataBlocks = doc.getElementsByTagName(tagName);
         System.out.println(dataBlocks.getLength());
 
@@ -87,7 +84,7 @@ public class CertificateBuilderService {
             if(n.getNodeType() == Node.ELEMENT_NODE && ((Element)n).hasAttribute("id")) {
                 Element e = (Element) dataBlocks.item(i);
                 if(ids.contains(e.getAttribute("id"))) {
-                    elements.add(e);
+                    elements.put(e.getAttribute("id"), e);
                 }
             }
         }

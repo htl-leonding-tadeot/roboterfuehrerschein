@@ -35,4 +35,9 @@
         <Button fx:id="btnPic" text="Bild auswählen" onAction="#onPicClicked"/>
         <Button fx:id="btnPdf" text="PDF generieren" onAction="#onPdfClicked"/>
     </HBox>
+
+    <VBox>
+        <Label>Hint: Image size should be 640x480</Label>
+        <Label fx:id="status"/>
+    </VBox>
 </VBox>

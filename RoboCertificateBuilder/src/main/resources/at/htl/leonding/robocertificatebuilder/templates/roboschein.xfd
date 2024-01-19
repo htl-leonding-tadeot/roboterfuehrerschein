@@ -10,49 +10,32 @@
 		</fo:simple-page-master>
 	</fo:layout-master-set>
 	<fo:page-sequence master-reference="all-pages">
-		<fo:static-content flow-name="xsl-region-before" font-size="12pt" font-family="Times New Roman">
-			<fo:block> </fo:block>
-		</fo:static-content>
-		<fo:static-content flow-name="xsl-region-after" font-size="12pt" font-family="Times New Roman">
-			<fo:block> </fo:block>
-		</fo:static-content>
-		<fo:static-content flow-name="xsl-region-start" font-size="12pt" font-family="Times New Roman">
-			<fo:block> </fo:block>
-		</fo:static-content>
-		<fo:static-content flow-name="xsl-region-end" font-size="12pt" font-family="Times New Roman">
-			<fo:block> </fo:block>
-		</fo:static-content>
-		
-		
-		
-		
-		
-		
-		<fo:flow flow-name="xsl-region-body" font-size="12pt" font-family="Times New Roman">
+		<fo:flow flow-name="xsl-region-body" font-size="12pt" font-family="Times New Roman" font-weight="bold">
 			<fo:block-container>
-				<fo:block-container position="absolute">
-					<fo:block>
-						<fo:external-graphic id="robotemplate" content-height="170px"/>
-					</fo:block>
-				</fo:block-container>
-				<fo:block-container position="absolute" top="58px" left="4px">
-					<fo:block>
-						<fo:external-graphic id="foto" content-height="69px"/>
-					</fo:block>
-				</fo:block-container>
-				<fo:block-container position="absolute" top="105.5px" left="110px">
+                <fo:block-container position="absolute" top="0px" left="0px">
+                    <fo:block>
+                        <fo:external-graphic id="robotemplate" content-height="170px"/>
+                    </fo:block>
+                </fo:block-container>
+                <fo:block-container position="absolute" top="58px" left="5px">
+                    <fo:block>
+                        <fo:external-graphic id="foto" content-height="69px" width="91px" content-width="scale-to-fit"/>
+                    </fo:block>
+                </fo:block-container>
+				<fo:block-container position="absolute" top="47.3px" left="107.7px">
 					<fo:block id="nachname" font-size="9pt"></fo:block>
 				</fo:block-container>
-				<fo:block-container position="absolute" top="125.5px" left="110px">
+				<fo:block-container position="absolute" top="67.3px" left="107.7px">
 					<fo:block id="vorname" font-size="7.5pt"></fo:block>
 				</fo:block-container>
-				<fo:block-container position="absolute" top="134.5px" left="110px">
+				<fo:block-container position="absolute" top="76.3px" left="107.5px">
 					<fo:block id="geburtsdatum" font-size="7.5pt"></fo:block>
 				</fo:block-container>
-				<fo:block-container position="absolute" top="144.5px" left="113px">
+				<fo:block-container position="absolute" top="86.3px" left="107.5px">
 					<fo:block id="ausstellungsdatum" font-size="7.5pt"></fo:block>
 				</fo:block-container>
 			</fo:block-container>
+
 		</fo:flow>
 	</fo:page-sequence>
 </fo:root>
