@@ -57,11 +57,11 @@ public class CertificateBuilderService {
             // Template for robo certificate
             Element roboImage = pictures.get(1);
 
-            if(!Files.exists(Path.of("roboschein.jpg"))) {
-                Files.copy(Objects.requireNonNull(RoboCertificateApplication.class.getResourceAsStream("templates/roboschein.jpg")), Path.of("roboschein.jpg"));
+            if(!Files.exists(Path.of("roboschein.png"))) {
+                Files.copy(Objects.requireNonNull(RoboCertificateApplication.class.getResourceAsStream("templates/roboschein.png")), Path.of("roboschein.png"));
             }
 
-            roboImage.setAttribute("src", String.format("url(%s)", Paths.get("roboschein.jpg").toAbsolutePath()));
+            roboImage.setAttribute("src", String.format("url(%s)", Paths.get("roboschein.png").toAbsolutePath()));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -94,7 +94,7 @@ public class CertificateBuilderService {
         this.lastName.setTextContent(lastName);
         this.dob.setTextContent(dob.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
         this.doi.setTextContent(LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
-        this.picture.setAttribute("src", imagePath);
+        this.picture.setAttribute("src", String.format("url(%s)",imagePath));
 
         String fileName = String.format("%s-%s.pdf", firstName, lastName);
         FopFactory fopFactory = FopFactory.newInstance(new File(".").toURI());
