@@ -57,11 +57,11 @@ public class CertificateBuilderService {
             // Template for robo certificate
             Element roboImage = pictures.get(1);
 
-            if(!Files.exists(Path.of("roboschein.png"))) {
-                Files.copy(Objects.requireNonNull(RoboCertificateApplication.class.getResourceAsStream("templates/roboschein.png")), Path.of("roboschein.png"));
+            if(!Files.exists(Path.of("roboschein.jpg"))) {
+                Files.copy(Objects.requireNonNull(RoboCertificateApplication.class.getResourceAsStream("templates/roboschein.jpg")), Path.of("roboschein.jpg"));
             }
 
-            roboImage.setAttribute("src", String.format("url(%s)", Paths.get("roboschein.png").toAbsolutePath()));
+            roboImage.setAttribute("src", String.format("file:///%s", Paths.get("roboschein.jpg").toAbsolutePath()));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
