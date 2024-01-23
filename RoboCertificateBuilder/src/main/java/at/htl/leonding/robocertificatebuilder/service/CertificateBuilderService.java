@@ -97,7 +97,7 @@ public class CertificateBuilderService {
         this.lastName.setTextContent(lastName);
         this.dob.setTextContent(dob.format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
         this.doi.setTextContent(LocalDate.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy")));
-        this.picture.setAttribute("src", String.format("url(%s)",imagePath));
+        this.picture.setAttribute("src", String.format("file:///%s",imagePath));
 
         String fileName = String.format("%s-%s.pdf", firstName, lastName);
         FopFactory fopFactory = FopFactory.newInstance(new File(".").toURI());
