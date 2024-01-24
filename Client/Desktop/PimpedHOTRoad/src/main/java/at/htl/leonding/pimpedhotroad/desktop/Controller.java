@@ -60,6 +60,7 @@ public class Controller implements Initializable {
     private static final int BAUD_RATE = 115200;
 
     private SerialPort serialPort = null;
+    private boolean connectionNotAvailable = false;
 
 
     @Override
@@ -67,7 +68,7 @@ public class Controller implements Initializable {
         setConnected(false);
         Platform.runLater(() -> btn_Connect.requestFocus());
     }
-
+SerialPort
     public void connectComPort() {
         try {
             CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier(PORT_NAME);
@@ -84,6 +85,7 @@ public class Controller implements Initializable {
                 }
             }
         } catch (Exception e) {
+            connectionNotAvailable = true;
             log("error: " + e);
         }
     }
@@ -283,7 +285,7 @@ public class Controller implements Initializable {
     }
 
     private void sendToArduino(String direction) {
-        if (direction.isEmpty()) {
+        if (direction.isEmpty() || connectionNotAvailable) {
             return;
         }
         try {
