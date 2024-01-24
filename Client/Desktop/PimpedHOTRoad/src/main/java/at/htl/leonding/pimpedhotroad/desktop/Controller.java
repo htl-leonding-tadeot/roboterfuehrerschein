@@ -1,6 +1,7 @@
 package at.htl.leonding.pimpedhotroad.desktop;
 
 import at.htl.leonding.pimpedhotroad.model.Impulse;
+import com.fazecast.jSerialComm.SerialPort;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,15 +11,13 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 
-import gnu.io.CommPort;
-import gnu.io.CommPortIdentifier;
-import gnu.io.SerialPort;
-
 import java.io.InputStream;
 import java.io.OutputStream;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
+import java.util.PrimitiveIterator;
 import java.util.ResourceBundle;
 import java.util.Stack;
 import java.util.logging.Level;
@@ -56,7 +55,7 @@ public class Controller implements Initializable {
     private Stack<KeyCode> pressedKeys = new Stack<>();
     private boolean connecting = false;
 
-    private static final String PORT_NAME = "/dev/ttyUSB4";
+    private static final String PORT_NAME = "COM3";
     private static final int BAUD_RATE = 115200;
 
     private SerialPort serialPort = null;
@@ -70,21 +69,30 @@ public class Controller implements Initializable {
     }
 
     public void connectComPort() {
+//        try {
+//            CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier(PORT_NAME);
+//            if (portIdentifier.isCurrentlyOwned()) {
+//                log("Port is currently in use");
+//            } else {
+//                CommPort commPort = portIdentifier.open(this.getClass().getName(), 2000);
+//                if (commPort instanceof SerialPort) {
+//                    serialPort = (SerialPort) commPort;
+//                    serialPort.setSerialPortParams(BAUD_RATE, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+//                    log("Connected to Arduino");
+//                } else {
+//                    log("Error: Port is not a serial port.");
+//                }
+//            }
+//        } catch (Throwable e) {
+//            connectionNotAvailable = true;
+//            log("Warning: Port is not available.");
+//        }
         try {
-            CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier(PORT_NAME);
-            if (portIdentifier.isCurrentlyOwned()) {
-                log("Port is currently in use");
-            } else {
-                CommPort commPort = portIdentifier.open(this.getClass().getName(), 2000);
-                if (commPort instanceof SerialPort) {
-                    serialPort = (SerialPort) commPort;
-                    serialPort.setSerialPortParams(BAUD_RATE, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-                    log("Connected to Arduino");
-                } else {
-                    log("Error: Port is not a serial port.");
-                }
-            }
-        } catch (Exception e) {
+            serialPort = SerialPort.getCommPort(PORT_NAME);
+            serialPort.setComPortParameters(BAUD_RATE,8,1,0);
+            serialPort.setComPortTimeouts(SerialPort.TIMEOUT_NONBLOCKING,0,0);
+            serialPort.openPort(20);
+        } catch (Throwable e) {
             connectionNotAvailable = true;
             log("Warning: Port is not available.");
         }
@@ -184,7 +192,7 @@ public class Controller implements Initializable {
             log(ex.getClass() + ": " + ex.getMessage());
             log("Disconnected anyway, anarchy!");
         } finally {
-            serialPort.close();
+            serialPort.closePort();
         }
     }
 
@@ -295,10 +303,9 @@ public class Controller implements Initializable {
                     return;
                 }
             }
-            InputStream in = serialPort.getInputStream();
-            OutputStream out = serialPort.getOutputStream();
-
-            out.write(direction.getBytes());
+            PrintWriter writer = new PrintWriter(serialPort.getOutputStream(), true);
+            writer.print(direction);
+            writer.flush();
             log("Sent: " + direction);
 
         } catch (Exception e) {
