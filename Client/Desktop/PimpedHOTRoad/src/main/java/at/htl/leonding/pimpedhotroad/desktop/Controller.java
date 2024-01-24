@@ -10,6 +10,13 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 
+import gnu.io.CommPort;
+import gnu.io.CommPortIdentifier;
+import gnu.io.SerialPort;
+
+import java.io.InputStream;
+import java.io.OutputStream;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -49,10 +56,36 @@ public class Controller implements Initializable {
     private Stack<KeyCode> pressedKeys = new Stack<>();
     private boolean connecting = false;
 
+    private static final String PORT_NAME = "/dev/ttyUSB4";
+    private static final int BAUD_RATE = 115200;
+
+    private SerialPort serialPort = null;
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setConnected(false);
         Platform.runLater(() -> btn_Connect.requestFocus());
+    }
+
+    public void connectComPort() {
+        try {
+            CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier(PORT_NAME);
+            if (portIdentifier.isCurrentlyOwned()) {
+                log("Port is currently in use");
+            } else {
+                CommPort commPort = portIdentifier.open(this.getClass().getName(), 2000);
+                if (commPort instanceof SerialPort) {
+                    serialPort = (SerialPort) commPort;
+                    serialPort.setSerialPortParams(BAUD_RATE, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
+                    log("Connected to Arduino");
+                } else {
+                    log("Error: Port is not a serial port.");
+                }
+            }
+        } catch (Exception e) {
+            log("error: " + e);
+        }
     }
 
     @FXML
@@ -148,6 +181,8 @@ public class Controller implements Initializable {
 
             log(ex.getClass() + ": " + ex.getMessage());
             log("Disconnected anyway, anarchy!");
+        } finally {
+            serialPort.close();
         }
     }
 
@@ -201,6 +236,12 @@ public class Controller implements Initializable {
     }
 
     private void send(Impulse impulse) {
+        // a bit messy, i had no time to fix it
+        sendToArduino(impulse == Impulse.FORWARD ? "0" :
+                impulse == Impulse.RIGHT ? "1" :
+                        impulse == Impulse.BACKWARD ? "2" :
+                                impulse == Impulse.LEFT ? "3" :
+                                        impulse == Impulse.STOP ? "4" : "");
         boolean sent = false;
         while (!sent) {
             try {
@@ -238,6 +279,25 @@ public class Controller implements Initializable {
             case SPACE:
                 send(Impulse.STOP);
                 break;
+        }
+    }
+
+    private void sendToArduino(String direction) {
+        if (direction.isEmpty()) {
+            return;
+        }
+        try {
+            if (serialPort == null) {
+                connectComPort();
+            }
+            InputStream in = serialPort.getInputStream();
+            OutputStream out = serialPort.getOutputStream();
+
+            out.write(direction.getBytes());
+            log("Sent: " + direction);
+
+        } catch (Exception e) {
+            log("error: " + e);
         }
     }
 }
