@@ -68,6 +68,7 @@ public class Controller implements Initializable {
         setConnected(false);
         Platform.runLater(() -> btn_Connect.requestFocus());
     }
+
     public void connectComPort() {
         try {
             CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier(PORT_NAME);
@@ -85,7 +86,7 @@ public class Controller implements Initializable {
             }
         } catch (Exception e) {
             connectionNotAvailable = true;
-            log("error: " + e);
+            log("Warning: Port is not available.");
         }
     }
 
@@ -290,6 +291,9 @@ public class Controller implements Initializable {
         try {
             if (serialPort == null) {
                 connectComPort();
+                if (connectionNotAvailable) {
+                    return;
+                }
             }
             InputStream in = serialPort.getInputStream();
             OutputStream out = serialPort.getOutputStream();
