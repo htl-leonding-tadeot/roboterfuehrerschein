@@ -91,7 +91,12 @@ public class Controller implements Initializable {
             serialPort = SerialPort.getCommPort(PORT_NAME);
             serialPort.setComPortParameters(BAUD_RATE,8,1,0);
             serialPort.setComPortTimeouts(SerialPort.TIMEOUT_NONBLOCKING,0,0);
-            serialPort.openPort(20);
+            serialPort.openPort(1000);
+            if(serialPort.isOpen()){
+                log("Port successfully opened");
+            } else {
+                log("Warning: port is not open");
+            }
         } catch (Throwable e) {
             connectionNotAvailable = true;
             log("Warning: Port is not available.");
@@ -129,6 +134,9 @@ public class Controller implements Initializable {
             try {
                 if (vehicleClient.isConnected()) {
                     vehicleClient.disconnect();
+                }
+                if (serialPort.isOpen()) {
+                    serialPort.closePort();
                 }
             } catch (IOException ex) {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -191,8 +199,6 @@ public class Controller implements Initializable {
 
             log(ex.getClass() + ": " + ex.getMessage());
             log("Disconnected anyway, anarchy!");
-        } finally {
-            serialPort.closePort();
         }
     }
 
