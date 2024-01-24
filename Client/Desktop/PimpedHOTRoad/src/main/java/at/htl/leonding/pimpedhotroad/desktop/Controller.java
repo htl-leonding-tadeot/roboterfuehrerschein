@@ -68,7 +68,6 @@ public class Controller implements Initializable {
         setConnected(false);
         Platform.runLater(() -> btn_Connect.requestFocus());
     }
-SerialPort
     public void connectComPort() {
         try {
             CommPortIdentifier portIdentifier = CommPortIdentifier.getPortIdentifier(PORT_NAME);
